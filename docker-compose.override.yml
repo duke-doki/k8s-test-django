@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  db:
+    extends:
+      file: docker-compose.yml
+      service: db
+    ports:
+      - "5433:5432"
