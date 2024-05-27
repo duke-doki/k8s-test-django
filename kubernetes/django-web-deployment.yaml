@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-web
+  labels:
+    app.kubernetes.io/name: django-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: django-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: django-web
+        app.kubernetes.io/instance: django-web-1
+        app.kubernetes.io/version: "1.0.0"
+        app.kubernetes.io/component: web
+        app.kubernetes.io/part-of: django-app
+        app.kubernetes.io/managed-by: kubectl
+    spec:
+      containers:
+      - name: django-web
+        image: django_app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        env:
+        - name: SECRET_KEY
+          value: "my-secret-key"
+        - name: DATABASE_URL
+          value: "postgres://test_k8s:OwOtBep9Frut@192.168.0.108:5433/test_k8s"
+        - name: ALLOWED_HOSTS
+          value: "*"
+        - name: DEBUG
+          value: "False"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-web
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app.kubernetes.io/name: django-web
