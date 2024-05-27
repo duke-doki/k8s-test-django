@@ -26,14 +26,26 @@ spec:
         ports:
         - containerPort: 80
         env:
-        - name: SECRET_KEY
-          value: "my-secret-key"
-        - name: DATABASE_URL
-          value: "postgres://test_k8s:OwOtBep9Frut@192.168.0.108:5433/test_k8s"
-        - name: ALLOWED_HOSTS
-          value: "*"
-        - name: DEBUG
-          value: "False"
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: django-web-secret
+                key: SECRET_KEY
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: django-web-secret
+                key: DATABASE_URL
+          - name: ALLOWED_HOSTS
+            valueFrom:
+              secretKeyRef:
+                name: django-web-secret
+                key: ALLOWED_HOSTS
+          - name: DEBUG
+            valueFrom:
+              secretKeyRef:
+                name: django-web-secret
+                key: DEBUG
 ---
 apiVersion: v1
 kind: Service
