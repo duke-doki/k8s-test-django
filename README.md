@@ -103,7 +103,9 @@ kubectl create secret generic django-web-secret --from-env-file=.env
 kubectl apply -f kubernetes/django-web-deployment.yaml
 ```
 
-И получите ссылку отсюда:
+Получите ip отсюда:
 ```shell
-minikube service django-web --url
+minikube ip
 ```
+
+И добавьте его в hosts файл по [этой инструкции](https://help.reg.ru/support/dns-servery-i-nastroyka-zony/rabota-s-dns-serverami/fayl-hosts-gde-nakhoditsya-i-kak-yego-izmenit)
