@@ -109,3 +109,10 @@ minikube ip
 ```
 
 И добавьте его в hosts файл по [этой инструкции](https://help.reg.ru/support/dns-servery-i-nastroyka-zony/rabota-s-dns-serverami/fayl-hosts-gde-nakhoditsya-i-kak-yego-izmenit)
+
+
+Также, для автоматической очистки БД от сессий запустите:
+
+```shell
+kubectl apply -f kubernetes/django-clearsessions.yaml
+```
