@@ -1,15 +1,17 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: clear-django-sessions
+  name: django-clearsessions
 spec:
   schedule: "@monthly"
+  startingDeadlineSeconds: 10
   jobTemplate:
     spec:
+      ttlSecondsAfterFinished: 86400
       template:
         spec:
           containers:
-            - name: clear-django-sessions
+            - name: django-clearsessions
               image: django_app:latest
               imagePullPolicy: IfNotPresent
               command: [ "/bin/sh" ]
