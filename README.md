@@ -116,3 +116,9 @@ minikube ip
 ```shell
 kubectl apply -f kubernetes/django-clearsessions.yaml
 ```
+
+Для запуска миграций:
+
+```shell
+kubectl apply -f kubernetes/django-migrate.yaml
+```
