@@ -122,3 +122,7 @@ kubectl apply -f kubernetes/django-clearsessions.yaml
 ```shell
 kubectl apply -f kubernetes/django-migrate.yaml
 ```
+
+### БД внутри кластера
+
+Установите [helm](https://artifacthub.io/packages/helm/bitnami/postgresql) и создайте БД [внутри пода](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)
