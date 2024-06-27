@@ -100,7 +100,9 @@ kubectl create secret generic django-web-secret --from-env-file=.env
 Чтобы открыть сайт запустите:
 
 ```shell
-kubectl apply -f kubernetes/django-web-deployment.yaml
+kubectl apply -f kubernetes/django-web-deployment.yaml \
+              -f kubernetes/django-web-service.yaml \
+              -f kubernetes/django-web-ingress.yaml
 ```
 
 Получите ip отсюда:
