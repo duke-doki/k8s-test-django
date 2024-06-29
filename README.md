@@ -127,4 +127,10 @@ kubectl apply -f kubernetes/django-migrate.yaml
 
 ### БД внутри кластера
 
-Установите [helm](https://artifacthub.io/packages/helm/bitnami/postgresql) и создайте БД [внутри пода](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)
+Установите [helm](https://artifacthub.io/packages/helm/bitnami/postgresql) и создайте БД внутри пода:
+```
+sudo -u postgres psql
+postgres=# create database mydb;
+postgres=# create user myuser with encrypted password 'mypass';
+postgres=# grant all privileges on database mydb to myuser;
+```
