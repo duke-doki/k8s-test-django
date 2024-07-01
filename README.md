@@ -79,19 +79,22 @@ $ docker compose build web
 
 ### Как добавить переменные окружения в kubernetes Secret
 
-Создайте файл с переменными окружения, контент которого будет выглядеть так:
+Закодируйте переменные окружения в base64:
 ```bash
-$ cat .env
-SECRET_KEY=my-secret-key
-DATABASE_URL=postgres://test_k8s:OwOtBep9Frut@192.168.0.108:5433/test_k8s
-ALLOWED_HOSTS=*
-DEBUG=True
+echo -n 'my-secret-key' | base64
+echo -n 'postgres://myuser:mypass@postgres-db-postgresql.default.svc.cluster.local:5432/mydatabase' | base64
+echo -n '*' | base64
+echo -n 'False' | base64
 ```
 
-Запустите команду создания Secret в папке с .env файлом:
+Заполните `secret.yaml`:
 
 ```shell
-kubectl create secret generic django-web-secret --from-env-file=.env
+data:
+  SECRET_KEY: bXktc2VjcmV0LWtleQ==
+  DATABASE_URL: cG9zdGdyZXM6Ly9teXVzZXI6bXlwYXNzQHBvc3RncmVzLWRiLXBvc3RncmVzcWwuc2VydmljZS5jbHVzdGVyLmxvY2FsOjU0MzIvbXlkYXRhYmFzZQ==
+  ALLOWED_HOSTS: Kg==
+  DEBUG: RmFsc2U=
 ```
 
 
@@ -100,7 +103,8 @@ kubectl create secret generic django-web-secret --from-env-file=.env
 Чтобы открыть сайт запустите:
 
 ```shell
-kubectl apply -f kubernetes/django-web-deployment.yaml \
+kubectl apply -f kubernetes/django-web-secret.yaml \
+              -f kubernetes/django-web-deployment.yaml \
               -f kubernetes/django-web-service.yaml \
               -f kubernetes/django-web-ingress.yaml
 ```
@@ -111,6 +115,7 @@ minikube ip
 ```
 
 И добавьте его в hosts файл по [этой инструкции](https://help.reg.ru/support/dns-servery-i-nastroyka-zony/rabota-s-dns-serverami/fayl-hosts-gde-nakhoditsya-i-kak-yego-izmenit)
+Сайт будет доступен по адресу http://star-burger.test/
 
 
 Также, для автоматической очистки БД от сессий запустите:

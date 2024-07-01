@@ -11,26 +11,8 @@ spec:
         imagePullPolicy: IfNotPresent
         command: ["/bin/sh"]
         args: ["-c", "python manage.py migrate"]
-        env:
-          - name: SECRET_KEY
-            valueFrom:
-              secretKeyRef:
-                name: django-web-secret
-                key: SECRET_KEY
-          - name: DATABASE_URL
-            valueFrom:
-              secretKeyRef:
-                name: django-web-secret
-                key: DATABASE_URL
-          - name: ALLOWED_HOSTS
-            valueFrom:
-              secretKeyRef:
-                name: django-web-secret
-                key: ALLOWED_HOSTS
-          - name: DEBUG
-            valueFrom:
-              secretKeyRef:
-                name: django-web-secret
-                key: DEBUG
+        envFrom:
+          - secretRef:
+              name: django-web-secret
       restartPolicy: OnFailure
   backoffLimit: 4
