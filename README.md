@@ -142,7 +142,7 @@ postgres=# grant all privileges on database mydb to myuser;
 
 ## Деплой в yandex cloud с использованием Lens Desktop
 
-1. Создайте* Pod для образа [nginx](https://hub.docker.com/_/nginx), который будет иметь ваш `namespace`. Например, [так](envs/yc-sirius-test/nginx-pod.yaml)
+1. Создайте* Pod для образа [nginx](https://hub.docker.com/_/nginx), который будет иметь ваш `namespace`. Например, [так](envs/yc-sirius-test/nginx-pod.yaml).
 2. Создайте Service для этого Pod'а. Например, вот [так](envs/yc-sirius-test/nginx-service.yaml).
 
 *Для создания манифеста в Lens, нужно нажать на `+` (New tab) внизу на панели и выюрать "Create resource".
