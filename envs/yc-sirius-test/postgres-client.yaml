@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: postgres-client
+  namespace: edu-sleepy-engelbart
+spec:
+  containers:
+  - name: postgres-client
+    image: postgres:latest
+    env:
+    - name: POSTGRES_DSN
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: dsn
+    - name: POSTGRES_HOST
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: host
+    - name: POSTGRES_DB
+      value: edu-sleepy-engelbart
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: password
+    - name: POSTGRES_PORT
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: port
+    - name: POSTGRES_USER
+      valueFrom:
+        secretKeyRef:
+          name: postgres
+          key: username
+    - name: SSL_CERT_FILE
+      value: /sslcerts/RootCA.pem
+    volumeMounts:
+    - name: ssl-cert
+      mountPath: /sslcerts
+      readOnly: true
+  volumes:
+  - name: ssl-cert
+    secret:
+      secretName: ssl-cert-secret
+      items:
+      - key: RootCA.pem
+        path: RootCA.pem

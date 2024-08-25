@@ -146,3 +146,14 @@ postgres=# grant all privileges on database mydb to myuser;
 2. Создайте Service для этого Pod'а. Например, вот [так](envs/yc-sirius-test/nginx-service.yaml).
 
 *Для создания манифеста в Lens, нужно нажать на `+` (New tab) внизу на панели и выюрать "Create resource".
+
+## Как подготовить dev окружение
+
+Скачайте ssl-сертификат с [облака Яндекс](https://storage.yandexcloud.net/cloud-certs/RootCA.pem).
+Создайте kubernetes secret:
+```commandline
+kubectl create secret generic ssl-cert-secret   --from-file=RootCA.pem=/путь/к/сертификату/RootCA.pem   --namespace=<namespace>
+```
+Замените `/путь/к/сертификату/RootCA.pem` и `<namespace>`.
+
+Для тестирования подключения к базе данных postgres, создайте манифест вроде [этого](envs/yc-sirius-test/postgres-client.yaml).
