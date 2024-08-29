@@ -103,10 +103,10 @@ data:
 Чтобы открыть сайт запустите:
 
 ```shell
-kubectl apply -f kubernetes/django-web-secret.yaml \
-              -f kubernetes/django-web-deployment.yaml \
-              -f kubernetes/django-web-service.yaml \
-              -f kubernetes/django-web-ingress.yaml
+kubectl apply -f local/minikube-virtualbox/django-web-secret.yaml \
+              -f local/minikube-virtualbox/django-web-deployment.yaml \
+              -f local/minikube-virtualbox/django-web-service.yaml \
+              -f local/minikube-virtualbox/django-web-ingress.yaml
 ```
 
 Получите ip отсюда:
@@ -121,13 +121,13 @@ minikube ip
 Также, для автоматической очистки БД от сессий запустите:
 
 ```shell
-kubectl apply -f kubernetes/django-clearsessions.yaml
+kubectl apply -f local/minikube-virtualbox/django-clearsessions.yaml
 ```
 
 Для запуска миграций:
 
 ```shell
-kubectl apply -f kubernetes/django-migrate.yaml
+kubectl apply -f local/minikube-virtualbox/django-migrate.yaml
 ```
 
 ### БД внутри кластера
@@ -151,7 +151,7 @@ postgres=# grant all privileges on database mydb to myuser;
 
 Скачайте ssl-сертификат с [облака Яндекс](https://storage.yandexcloud.net/cloud-certs/RootCA.pem).
 Создайте kubernetes secret:
-```commandline
+```
 kubectl create secret generic ssl-cert-secret   --from-file=RootCA.pem=/путь/к/сертификату/RootCA.pem   --namespace=<namespace>
 ```
 Замените `/путь/к/сертификату/RootCA.pem` и `<namespace>`.
