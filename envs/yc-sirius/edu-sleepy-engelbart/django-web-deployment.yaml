@@ -29,3 +29,17 @@ spec:
         envFrom:
           - secretRef:
               name: django-web-secret
+        env:
+          - name: SSL_CERT_FILE
+            value: /sslcerts/RootCA.pem
+        volumeMounts:
+        - name: ssl-cert
+          mountPath: /sslcerts
+          readOnly: true
+      volumes:
+      - name: ssl-cert
+        secret:
+          secretName: ssl-cert-secret
+          items:
+          - key: RootCA.pem
+            path: RootCA.pem
